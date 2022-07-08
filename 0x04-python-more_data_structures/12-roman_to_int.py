@@ -1,16 +1,20 @@
 #!/usr/bin/python3
-def roman_to_int(roma_string):
-    if roman_string is None or isinstance(roman_string, str) is False:
+def roman_to_int(roman_string):
+    if type(roman_string) is not str or roman_string is None:
         return 0
-        letters = {'I': 1, 'V': 5,  'X': 10, 'L': 50, 'C': 100, 'D': 500,
-                   'M': 1000}
-        reverse_num = roman_string[::-1]
-        maxchar = 'I'
-        total = 0
-        for i in reverse_num:
-            if letters[i] >= letters[maxchar]:
-                maxchar = i
-                total += letters[i]
-            else:
-                total -= letters[i]
-        return total
+    roman_dict = {
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000
+    }
+    decs = [roman_dict[x] for x in roman_string]
+    output = 0
+    for i in range(len(decs)):
+        output += decs[i]
+        if decs[i - 1] < decs[i] and i != 0:
+            output -= (decs[i - 1] + decs[i - 1])
+    return output
